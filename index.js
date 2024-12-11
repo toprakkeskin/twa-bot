@@ -50,7 +50,7 @@ const keyboard = Markup.inlineKeyboard([
 
 const isCommandMsg = (ctx) => ctx.message.text.startsWith("/");
 
-bot.on("test", (ctx) => {
+bot.on(message('text'), (ctx) => {
   if (isCommandMsg(ctx)) {
     ctx.reply("Unknown command, type /help for all commands.")
   } else {
