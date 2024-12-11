@@ -48,7 +48,7 @@ const keyboard = Markup.inlineKeyboard([
   Markup.button.callback("❌", "dislike"),
 ]);
 
-const isCommandMsg = (ctx) => message.text.startsWith("/");
+const isCommandMsg = (ctx) => ctx.message.text.startsWith("/");
 
 bot.on("test", (ctx) => {
   if (isCommandMsg(ctx)) {
