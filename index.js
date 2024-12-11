@@ -3,6 +3,7 @@ import { message } from 'telegraf/filters'
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
+
 bot.settings(async ctx => {
 	await ctx.telegram.setMyCommands([
 		{
@@ -11,7 +12,7 @@ bot.settings(async ctx => {
 		},
 		{
 			command: "/help",
-			description: "Gives instructions",
+			description: "Detailed instructions",
 		},
 		{
 			command: "/games",
@@ -24,13 +25,13 @@ bot.settings(async ctx => {
 bot.start((ctx) => ctx.reply('Welcome'))
 
 bot.help(async ctx => {
-	const commands = await ctx.getMyCommands();
+	const commands = await ctx.telegram.getMyCommands()
 	const info = commands.reduce(
 		(acc, val) => `${acc}/${val.command} - ${val.description}\n`,
 		"",
-	);
-	return ctx.reply(info);
-});
+	)
+	return ctx.reply(info)
+})
 
 
 bot.command('games', async (ctx) => {
@@ -45,12 +46,13 @@ bot.command('games', async (ctx) => {
 })
 
 const keyboard = Markup.inlineKeyboard([
-	Markup.button.url("❤️", "http://telegraf.js.org"),
-	Markup.button.callback("Delete", "delete"),
-]);
+	Markup.button.callback("✅", "like"),
+	Markup.button.callback("❌", "dislike"),
+])
 
-bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard));
-bot.action("delete", ctx => ctx.deleteMessage());
+bot.on("message", ctx => ctx.copyMessage(ctx.message.chat.id, keyboard))
+bot.action("dislike", ctx => ctx.deleteMessage())
+bot.action("like", ctx => ctx.reply("Thank you!"))
 
 
 
