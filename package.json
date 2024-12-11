@@ -1,0 +1,13 @@
+{
+  "name": "twa-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/toprakkeskin/twa-bot",
+  "author": "tk",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.16.3"
+  }
+}
