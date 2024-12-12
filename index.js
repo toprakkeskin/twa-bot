@@ -37,7 +37,7 @@ bot.help(async (ctx) => {
 
 bot.command("games", async (ctx) => {
   const keyboard = Markup.inlineKeyboard(
-    Array.from({ length: 10 }, (_, idx) => `${++idx}`).map((e) =>
+    Array.from({ length: GAME_COUNT }, (_, idx) => `${++idx}`).map((e) =>
       Markup.button.webApp(
         process.env[`BOT_GAME_${e}_NAME`],
         process.env[`BOT_GAME_${e}_URL`]
@@ -62,8 +62,6 @@ bot.command("games", async (ctx) => {
 //   }
 // });
 
-// bot.action("dislike", (ctx) => ctx.deleteMessage());
-// bot.action("like", (ctx) => ctx.reply("Thank you!"));
 
 bot.launch({
   webhook: {
@@ -75,3 +73,4 @@ bot.launch({
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
+
