@@ -36,7 +36,7 @@ bot.help(async (ctx) => {
 });
 
 bot.command("games", async (ctx) => {
-  keyboard = Markup.inlineKeyboard(
+  const keyboard = Markup.inlineKeyboard(
     Array.from({ length: 10 }, (_, idx) => `${++idx}`).map((e) =>
       Markup.button.webApp(
         process.env[`BOT_GAME_${e}_NAME`],
