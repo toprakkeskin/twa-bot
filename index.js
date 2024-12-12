@@ -24,6 +24,10 @@ const GAME_COUNT = parseInt(process.env.GAME_COUNT);
 //   return ctx.reply("Ok");
 // });
 
+bot.telegram.getMe().then((botInfo) => {
+  bot.options.username = botInfo.username; 
+});
+
 bot.start((ctx) => ctx.reply("Welcome"));
 
 bot.help(async (ctx) => {
@@ -46,6 +50,8 @@ bot.command("games", async (ctx) => {
   );
   return ctx.reply("Select a game to play now:", keyboard);
 });
+
+
 
 // const keyboard = Markup.inlineKeyboard([
 //   Markup.button.callback("✅", "like"),
