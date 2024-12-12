@@ -37,12 +37,12 @@ bot.help(async (ctx) => {
 
 bot.command("games", async (ctx) => {
   const keyboard = Markup.inlineKeyboard(
-    Array.from({ length: GAME_COUNT }, (_, idx) => `${++idx}`).map((e) =>
+    Array.from({ length: GAME_COUNT }, (_, idx) => `${++idx}`).map((e) => [
       Markup.button.webApp(
         process.env[`BOT_GAME_${e}_NAME`],
         process.env[`BOT_GAME_${e}_URL`]
-      )
-    )
+      ),
+    ])
   );
   return ctx.reply("Select a game to play now:", keyboard);
 });
@@ -62,7 +62,6 @@ bot.command("games", async (ctx) => {
 //   }
 // });
 
-
 bot.launch({
   webhook: {
     domain: process.env.BOT_PUBLIC_DOMAIN,
@@ -73,4 +72,3 @@ bot.launch({
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
-
