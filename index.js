@@ -3,6 +3,8 @@ import { message } from "telegraf/filters";
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+const GAME_COUNT = parseInt(process.env.GAME_COUNT);
+
 // This doesnt work, check later
 // bot.settings(async (ctx) => {
 //   await ctx.telegram.setMyCommands([
@@ -34,32 +36,34 @@ bot.help(async (ctx) => {
 });
 
 bot.command("games", async (ctx) => {
-  return ctx.reply(
-    "Select a game to play now:",
-    Markup.inlineKeyboard([
-      Markup.button.webApp("Game #1", process.env.BOT_GAME_1_URL),
-      Markup.button.webApp("Game #2", process.env.BOT_GAME_2_URL),
-    ])
+  keyboard = Markup.inlineKeyboard(
+    Array.from({ length: 10 }, (_, idx) => `${++idx}`).map((e) =>
+      Markup.button.webApp(
+        process.env[`BOT_GAME_${e}_NAME`],
+        process.env[`BOT_GAME_${e}_URL`]
+      )
+    )
   );
+  return ctx.reply("Select a game to play now:", keyboard);
 });
 
-const keyboard = Markup.inlineKeyboard([
-  Markup.button.callback("✅", "like"),
-  Markup.button.callback("❌", "dislike"),
-]);
+// const keyboard = Markup.inlineKeyboard([
+//   Markup.button.callback("✅", "like"),
+//   Markup.button.callback("❌", "dislike"),
+// ]);
 
-const isCommandMsg = (ctx) => ctx.message.text.startsWith("/");
+// const isCommandMsg = (ctx) => ctx.message.text.startsWith("/");
 
-bot.on(message('text'), (ctx) => {
-  if (isCommandMsg(ctx)) {
-    ctx.reply("Unknown command, type /help for all commands.")
-  } else {
-    ctx.copyMessage(ctx.message.chat.id, keyboard);
-  }
-});
+// bot.on(message('text'), (ctx) => {
+//   if (isCommandMsg(ctx)) {
+//     ctx.reply("Unknown command, type /help for all commands.")
+//   } else {
+//     ctx.copyMessage(ctx.message.chat.id, keyboard);
+//   }
+// });
 
-bot.action("dislike", (ctx) => ctx.deleteMessage());
-bot.action("like", (ctx) => ctx.reply("Thank you!"));
+// bot.action("dislike", (ctx) => ctx.deleteMessage());
+// bot.action("like", (ctx) => ctx.reply("Thank you!"));
 
 bot.launch({
   webhook: {
